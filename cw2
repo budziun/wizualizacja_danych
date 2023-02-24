@@ -1,0 +1,89 @@
+#zad 2.1
+import math
+#zad a
+a2=12.44
+print("sufit=",math.ceil(a2))
+print("podloga=",math.floor(a2))
+print("round=",round(a2))
+
+x1=4.44
+y1=2
+
+print("fmod= ",math.fmod(x1, y1))
+print("%=",x1%y1)
+
+x=2
+y=1
+
+if(isinstance(x,int) and isinstance(y,int)):
+    print("x%y=",x%y)
+
+if(isinstance(x,float) or isinstance(y,float)):
+    print("math.fmod(x, y)=",math.fmod(x, y))
+
+def prints_log(a,n,sep="|"):
+    for k in range(1,n+1):
+        if k==1:
+            continue
+        log_value = round(math.log(a,k),2)
+        print(f"log_{k}({a})={log_value}",end=sep)
+
+prints_log(2,5)
+print('\n')
+a4= int(input("podaj a:"))
+
+print("exp=",math.exp(a4))
+print("e**a",math.e**a4)
+print("pow=",math.pow(math.e,a4))
+
+xd=2
+yd=100
+print('\n')
+print("pow",math.pow(xd,yd))
+print("** ",xd**yd)
+
+xe=10
+ye=4
+print('\n')
+print("remainder",math.remainder(-xe,ye))
+print("%",((-xe)%ye))
+
+cosh = math.cosh(1)
+sinh = math.sinh(1)
+print ('cosh:',cosh)
+print ('sinh:',sinh)
+print(math.isclose(sinh,cosh))
+
+#zad 2.2
+
+str = "zabsonziomaaal1234567890"
+print(str[12])
+print(str[:3]+str[:7:])
+print(str+str)
+print(str*3)
+print("dlugosc",len(str))
+
+str1='omamamale'
+
+def mod2(str1):
+    wynik=''
+    for i in range(len(str1)):
+        if i % 2 == 0:
+            wynik += str1[i]
+    return wynik
+
+print(mod2(str1))
+
+n = int(input("ile chcesz znakow od konca"))
+def odtylu(str1,n=1):
+    wynik=str1[-n:]
+    return wynik
+
+print(odtylu(str1,n))
+# odwrocony string
+print(str1[::-1])
+
+str2 = input("Podaj string")
+
+if(str1>str2):
+    print
