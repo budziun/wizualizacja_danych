@@ -113,4 +113,11 @@ print("Miasta sa w obu: ",miasta1.intersection(miasta2))
 print("Miasta ktore sa w pierwszym ale nie ma ich w drugim:",miasta1.difference(miasta2))
 print("Czy miasta1 jest podzbiorem miasta2",miasta1.issubset(miasta2))
 
-
+krotka1 = (10,"Tekst",3.14,True,[1,2,3],{"a":1,"b":2},(1,2,3))
+print(krotka1)
+element = "Nowy tekst"
+nowa_krotka1= krotka1[:2] + (element,) + krotka1[3:]
+print(nowa_krotka1)
+print(nowa_krotka1[3])
+print(nowa_krotka1[3:6])
+print(nowa_krotka1[-3])
