@@ -1,0 +1,79 @@
+#plik 3.1
+import math
+lista14=list(range(15))
+print(lista14)
+
+potegi = [i ** 5 for i in range(15)]
+print(potegi)
+
+silnie = []
+for i in range(1,21):
+    silnia=1
+    for j in range(1,i+1):
+        silnia *=j
+    silnie.append(silnia)
+
+print(silnie)
+
+epot = []
+for i in range(1,20):
+    wynik = math.e ** i
+    epot.append(wynik)
+
+print(epot)
+
+nazwiska = ["Kowlaczyk","Nowak","Wisniewski","Wojcik","Kaczmarek"]
+
+dlg = []
+for i in nazwiska:
+    dlg.append(len(i))
+
+print(dlg)
+
+#plik 3.2
+list1=[1,2,3,4,5,6,7,8,9,10]
+list2=[10,20,30,40,50,60,70,80,90,100]
+
+print(list1+list2)
+list3=[list1[i]+list2[i] for i in range(len(list1))]
+print("suma wektorow list1 i list 2:",list3)
+
+miesiace = ["Styczeń","Luty","Marzec","Kwiecień","Maj","Czerwiec","Lipiec","Sierpień","Wrzesień","Październik","Listopad","Grudzień"]
+miesiace.sort()
+print(miesiace)
+
+def nazwiska_pozniejsze(lista_nazwisk,litera):
+    wyniki = []
+    for i in lista_nazwisk:
+        if i[0] > litera:
+            wyniki.append(i)
+
+    return wyniki
+
+lista_nazwisk=["Kowlaczyk","Nowak","Wisniewski","Wojcik","Kaczmarek","Czarny"]
+litera="P"
+print(nazwiska_pozniejsze(lista_nazwisk,litera))
+
+def dlugie_nazwiska(lista_nazwisk):
+    return [nazwisko for nazwisko in lista_nazwisk if len(nazwisko)>6]
+
+print(dlugie_nazwiska(lista_nazwisk))
+
+def czy_posortowane(lista):
+    if lista == sorted(lista, reverse=True):
+        return True
+    else:
+        return False
+
+lista1=[10,8,5,3]
+print(czy_posortowane(lista1))
+lista2=[1,2,3,4,5]
+print(czy_posortowane(lista2))
+
+def potega3(ciag):
+    return [x**3 for x in ciag]
+
+ciag1=[1,2,3,4,5]
+print(potega3(ciag1))
+ciag2=[-2,0,2]
+print(potega3(ciag2))
