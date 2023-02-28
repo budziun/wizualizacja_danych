@@ -140,3 +140,61 @@ odejmowanie(krotka1,element1)
 
 lista=[123,123,567,876,567]
 print(list(set(lista)))
+
+ksiazka= {'Jakub':123543907, 'Marcin':456123099,'Damian':123666321}
+def print_phone_numbers(ksiazka):
+    for imie,numer in ksiazka.items():
+        print(f"{imie} ma numer telefonu: {numer}")
+
+print_phone_numbers(ksiazka)
+
+ksiazka['Jan']=111222333
+print(ksiazka)
+del ksiazka['Marcin']
+print(ksiazka)
+ksiazka['Damian']=666666666
+print(ksiazka)
+
+def na_angielski(days):
+    wynik=[]
+    for day in dni:
+        if day == 'poniedziałek':
+            wynik.append('monday')
+        elif day == 'wtorek':
+            wynik.append('tuesday')
+        elif day == 'środa':
+            wynik.append('wednesday')
+        elif day == 'czwartek':
+            wynik.append('thursday')
+        elif day == 'piątek':
+            wynik.append('friday')
+        elif day == 'sobota':
+            wynik.append('saturday')
+        elif day == 'niedziela':
+            wynik.append('sunday')
+
+        return wynik
+
+
+def na_polski(days):
+    wynik = []
+    for day in dni:
+        if day == 'monday':
+            wynik.append('poniedziałek')
+        elif day == 'tuesday':
+            wynik.append('wtorek')
+        elif day == 'wednesday':
+            wynik.append('środa')
+        elif day == 'thursday':
+            wynik.append('czwartek')
+        elif day == 'friday':
+            wynik.append('piątek')
+        elif day == 'saturday':
+            wynik.append('sobota')
+        elif day == 'sunday':
+            wynik.append('niedziela')
+        return wynik
+
+dni=['poniedziałek','wtorek','środa','czwartek','piątek','sobota','niedziela']
+print(dni)
+print(na_angielski(dni))
