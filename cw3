@@ -77,3 +77,40 @@ ciag1=[1,2,3,4,5]
 print(potega3(ciag1))
 ciag2=[-2,0,2]
 print(potega3(ciag2))
+
+def zmiana(lista,n1,n2):
+    return[n2 if x == n1 else x for x in lista]
+
+lista1=[1.0,2.0,3.0,4.0,5.0]
+print(zmiana(lista1,3.0,10.0))
+lista2=[2.5,3.0,3.5,3.0,4.0,3.0]
+print(zmiana(lista2,3.0,7.0))
+
+def zmiana2(lista,n1,n2, rtol=1e-05,atol=1e-08):
+    return [n2 if math.isclose(x,n1,rel_tol=rtol,abs_tol=atol) else x for x in lista]
+
+lista11=[1.0,2.5,3.0,4.499999,5.0]
+print(zmiana2(lista11,4.5,10.0,rtol=1e-04))
+
+panstwa={"Polska","Nigeria","Niger","Niemcy","Hiszpania"}
+print(panstwa)
+panstwa.add("Niemcy")
+print(panstwa)
+
+if "Polska" in panstwa:
+    print("Polska jest w zbiorze")
+else:
+    print("Polska nie jest w zbiorze")
+
+panstwa.discard("Niemcy")
+print(panstwa)
+
+miasta1={"Olsztyn","Grudziądz","Gruta","Mełno","Radzyń Chełmiński"}
+miasta2={"Gdańsk","Olsztyn","Warszawa","Wrocław","Poznań","Łódź"}
+
+print("W przynajmniej jedym zbiorze sa: ",miasta1.union(miasta2))
+print("Miasta sa w obu: ",miasta1.intersection(miasta2))
+print("Miasta ktore sa w pierwszym ale nie ma ich w drugim:",miasta1.difference(miasta2))
+print("Czy miasta1 jest podzbiorem miasta2",miasta1.issubset(miasta2))
+
+
