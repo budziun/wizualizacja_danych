@@ -121,3 +121,22 @@ print(nowa_krotka1)
 print(nowa_krotka1[3])
 print(nowa_krotka1[3:6])
 print(nowa_krotka1[-3])
+
+def dodawnanie(krotka,element):
+   wynik = krotka + (element,)
+   print(wynik)
+
+krotka=(123,"eoeo",[4,7])
+element="aaasd"
+dodawnanie(krotka,element)
+
+def odejmowanie(krotka,element):
+    wynik = tuple(filter(lambda x: x != element,krotka))
+    print(wynik)
+
+krotka1=(12345,"essoeo",[4,7])
+element1="essoeo"
+odejmowanie(krotka1,element1)
+
+lista=[123,123,567,876,567]
+print(list(set(lista)))
