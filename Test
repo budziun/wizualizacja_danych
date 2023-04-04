@@ -1,10 +1,23 @@
-def show_phone_numbers(**kwargs):
-    for name, phone_number in kwargs.items():
-        print(f"{name} ma numer {phone_number}")
+import math
+
+def calculate_salary_statistics(**kwargs):
+    total_salary = sum(kwargs.values())
+    months_count = len(kwargs)
+    avg_salary = total_salary / months_count
+
+    total_salary_growth_percentage = 1
+    for salary in kwargs.values():
+        total_salary_growth_percentage *= (salary / avg_salary)
+
+    avg_salary_growth_percentage = math.pow(total_salary_growth_percentage, 1 / months_count) - 1
+
+    return avg_salary, avg_salary_growth_percentage
 
 # Przykład użycia funkcji z danymi testowymi:
-phone_book_1 = {'Jan': '123456789', 'Anna': '987654321', 'Tomasz': '456789123'}
-show_phone_numbers(**phone_book_1)
+salaries_1 = {'styczeń': 3000, 'luty': 3500, 'marzec': 3800, 'kwiecień': 4000}
+avg_salary_1, avg_salary_growth_percentage_1 = calculate_salary_statistics(**salaries_1)
+print(f"Średnie zarobki: {avg_salary_1}, średni wzrost zarobków: {avg_salary_growth_percentage_1 * 100:.2f}%")
 
-phone_book_2 = {'Katarzyna': '555444333', 'Piotr': '666777888', 'Agata': '999888777'}
-show_phone_numbers(**phone_book_2)
+salaries_2 = {'maj': 2500, 'czerwiec': 2700, 'lipiec': 2900, 'sierpień': 3200}
+avg_salary_2, avg_salary_growth_percentage_2 = calculate_salary_statistics(**salaries_2)
+print(f"Średnie zarobki: {avg_salary_2}, średni wzrost zarobków: {avg_salary_growth_percentage_2 * 100:.2f}%")
