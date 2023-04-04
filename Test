@@ -1,3 +1,4 @@
+names = ("anna", "monika", "julia", "karolina", "andrzej", "marcin", "magda", "ola")
 female_names = []
 
 for name in names:
