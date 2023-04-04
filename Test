@@ -1,0 +1,9 @@
+female_names = []
+
+for name in names:
+    if name.endswith("a"):
+        female_names.append(name.capitalize())
+
+female_names_tuple = tuple(female_names)
+
+print(female_names_tuple)
