@@ -1,0 +1,177 @@
+names = [ "michal" , "nela" , "ola" , "przemek" ]
+print(names)
+# cwiczenie 1
+capitalized_names=[]
+for name in names:
+    capitalized_names.append(name.capitalize())
+
+print(capitalized_names)
+
+names_with_l=[]
+
+for name in names:
+    if "l" in name:
+        names_with_l.append(name)
+
+print(names_with_l)
+
+
+female_names = []
+
+for name in names:
+    if name.endswith("a"):
+        female_names.append(name.capitalize())
+
+female_names_tuple = tuple(female_names)
+
+print(female_names_tuple)
+
+total_lenght=0
+for name in names:
+    total_lenght +=len(name)
+
+print("Sumaryczna długość wszystkich imion wynosi:", total_lenght)
+
+#cwicznie 2
+def iloczn(*num):
+    ilo = 1
+    for n in num:
+        ilo = ilo * n
+    return ilo
+print("iloczyn:",iloczn(2, 3, 4, 5))
+
+def potega(x, n):
+    wynik = 1
+    for i in range(0, n):
+        wynik = wynik * x
+    return wynik
+
+
+def sumapoteg(*num):
+    wynik = 0
+    print("podaj n-ta potege ")
+    n=int(input())
+    for i in num:
+        wynik = wynik + potega(i, n)
+    return wynik
+
+print("suma poteg wynosi: ",sumapoteg(2, 3, 4))
+
+def mean(*num):
+    wynik = 0
+    temp = 0
+    for i in num:
+        wynik = wynik + i
+        temp = temp + 1
+    return wynik / temp
+
+
+def gmean(*num):
+    wynik = 1
+    temp = 0
+    for i in num:
+        wynik = wynik * i
+        temp = temp + 1
+    return (wynik) ** (1 / temp)
+
+print("mean: ",mean(2, 4))
+print("gmean: ",gmean(4, 4))
+
+def dlg(*num):
+    wynik = 0
+    for i in num:
+        wynik = wynik + len(i)
+    return wynik
+
+print("sumaryczna dlugosc stringow: ",dlg("witam", "zegnam","adios"))
+print("\n")
+#cwiczenie 3
+
+def show_phone_numbers(**kwargs):
+    for name, phone_number in kwargs.items():
+        print(f"{name} ma numer {phone_number}")
+
+# Przykład użycia funkcji z danymi testowymi:
+phone_book_1 = {'Jan': '123456789', 'Anna': '987654321', 'Tomasz': '456789123'}
+show_phone_numbers(**phone_book_1)
+
+phone_book_2 = {'Katarzyna': '555444333', 'Piotr': '666777888', 'Agata': '999888777'}
+show_phone_numbers(**phone_book_2)
+print("\n")
+
+import math
+
+def calculate_salary_statistics(**kwargs):
+    total_salary = sum(kwargs.values())
+    months_count = len(kwargs)
+    avg_salary = total_salary / months_count
+
+    total_salary_growth_percentage = 1
+    for salary in kwargs.values():
+        total_salary_growth_percentage *= (salary / avg_salary)
+
+    avg_salary_growth_percentage = math.pow(total_salary_growth_percentage, 1 / months_count) - 1
+
+    return avg_salary, avg_salary_growth_percentage
+
+# Przykład użycia funkcji z danymi testowymi:
+salaries_1 = {'styczeń': 3000, 'luty': 3500, 'marzec': 3800, 'kwiecień': 4000}
+avg_salary_1, avg_salary_growth_percentage_1 = calculate_salary_statistics(**salaries_1)
+print(f"Średnie zarobki: {avg_salary_1}, średni wzrost zarobków: {avg_salary_growth_percentage_1 * 100:.2f}%")
+
+salaries_2 = {'maj': 2500, 'czerwiec': 2700, 'lipiec': 2900, 'sierpień': 3200}
+avg_salary_2, avg_salary_growth_percentage_2 = calculate_salary_statistics(**salaries_2)
+print(f"Średnie zarobki: {avg_salary_2}, średni wzrost zarobków: {avg_salary_growth_percentage_2 * 100:.2f}%")
+
+#cwicznie 4
+
+import re
+from datetime import date
+
+def validate_pesel(pesel):
+    pattern = r'^\d{11}$'
+    if not re.match(pattern, pesel):
+        return False
+
+    year = int(pesel[0:2])
+    month = int(pesel[2:4])
+    day = int(pesel[4:6])
+
+    if month > 80 and month < 93:
+        year += 1800
+        month -= 80
+    elif month > 0 and month < 13:
+        year += 1900
+    elif month > 20 and month < 33:
+        year += 2000
+        month -= 20
+    elif month > 40 and month < 53:
+        year += 2100
+        month -= 40
+    elif month > 60 and month < 73:
+        year += 2200
+        month -= 60
+    else:
+        return False
+
+    try:
+        birth_date = date(year, month, day)
+    except ValueError:
+        return False
+
+    gender = int(pesel[-2])
+    if gender % 2 == 0:
+        plec = 'kobieta'
+    else:
+        plec = 'mężczyzna'
+
+    return birth_date, plec
+
+pesel = input('Podaj numer PESEL: ')
+result = validate_pesel(pesel)
+if result:
+    birth_date, plec = result
+    print('Data urodzenia:', birth_date.strftime('%d.%m.%Y'))
+    print('Płeć:', plec)
+else:
+    print('Błędny format numeru PESEL')
