@@ -1,10 +1,10 @@
-names = ("anna", "monika", "julia", "karolina", "andrzej", "marcin", "magda", "ola")
-female_names = []
+def show_phone_numbers(**kwargs):
+    for name, phone_number in kwargs.items():
+        print(f"{name} ma numer {phone_number}")
 
-for name in names:
-    if name.endswith("a"):
-        female_names.append(name.capitalize())
+# Przykład użycia funkcji z danymi testowymi:
+phone_book_1 = {'Jan': '123456789', 'Anna': '987654321', 'Tomasz': '456789123'}
+show_phone_numbers(**phone_book_1)
 
-female_names_tuple = tuple(female_names)
-
-print(female_names_tuple)
+phone_book_2 = {'Katarzyna': '555444333', 'Piotr': '666777888', 'Agata': '999888777'}
+show_phone_numbers(**phone_book_2)
