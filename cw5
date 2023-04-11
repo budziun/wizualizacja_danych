@@ -1,0 +1,36 @@
+class Fruit:
+    def __init__(self, color):
+        self.color = color
+
+    def isfresh(self):
+        raise NotImplementedError("Subclass must implement abstract method")
+
+class Apple(Fruit):
+    def __init__(self, color):
+        super().__init__(color)
+
+    def isfresh(self):
+        if self.color == "red" or self.color == "green":
+            return True
+        else:
+            return False
+
+class Banana(Fruit):
+    def __init__(self, color):
+        super().__init__(color)
+
+    def isfresh(self):
+        if self.color == "yellow":
+            return True
+        else:
+            return False
+
+class Orange(Fruit):
+    def __init__(self, color):
+        super().__init__(color)
+
+    def isfresh(self):
+        if self.color == "orange":
+            return True
+        else:
+            return False
