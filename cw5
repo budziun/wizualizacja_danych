@@ -1,36 +1,41 @@
-class Fruit:
-    def __init__(self, color):
-        self.color = color
+class Romanian:
+    def __init__(self, value):
+        self.value = value
 
-    def isfresh(self):
-        raise NotImplementedError("Subclass must implement abstract method")
+    def to_roman(self):
+        roman_numeral_map = (('M', 1000), ('CM', 900), ('D', 500), ('CD', 400), ('C', 100), ('XC', 90), ('L', 50),
+                             ('XL', 40), ('X', 10), ('IX', 9), ('V', 5), ('IV', 4), ('I', 1))
+        num = self.value
+        result = ''
+        while num > 0:
+            for roman, integer in roman_numeral_map:
+                if num >= integer:
+                    result += roman
+                    num -= integer
+                    break
+        return result
 
-class Apple(Fruit):
-    def __init__(self, color):
-        super().__init__(color)
+    def to_arabic(self):
+        roman_numeral_map = (('M', 1000), ('CM', 900), ('D', 500), ('CD', 400), ('C', 100), ('XC', 90), ('L', 50),
+                             ('XL', 40), ('X', 10), ('IX', 9), ('V', 5), ('IV', 4), ('I', 1))
+        roman_numeral = self.value
+        i = result = 0
+        while i < len(roman_numeral):
+            for roman, integer in roman_numeral_map:
+                if roman_numeral[i:i+len(roman)] == roman:
+                    result += integer
+                    i += len(roman)
+                    break
+        return result
 
-    def isfresh(self):
-        if self.color == "red" or self.color == "green":
-            return True
-        else:
-            return False
+    def __add__(self, other):
+        return Romanian(self.to_arabic() + other.to_arabic()).to_roman()
 
-class Banana(Fruit):
-    def __init__(self, color):
-        super().__init__(color)
+    def __sub__(self, other):
+        return Romanian(self.to_arabic() - other.to_arabic()).to_roman()
 
-    def isfresh(self):
-        if self.color == "yellow":
-            return True
-        else:
-            return False
+    def __mul__(self, other):
+        return Romanian(self.to_arabic() * other.to_arabic()).to_roman()
 
-class Orange(Fruit):
-    def __init__(self, color):
-        super().__init__(color)
-
-    def isfresh(self):
-        if self.color == "orange":
-            return True
-        else:
-            return False
+    def __str__(self):
+        return self.to_roman()
