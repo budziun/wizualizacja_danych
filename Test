@@ -1,44 +1,59 @@
-import datetime
+class Vector:
+    def __init__(self, values):
+        self.values = values
 
-class Person:
-    def __init__(self, imie, nazwisko, pesel):
-        self.imie = imie
-        self.nazwisko = nazwisko
-        self.pesel = pesel
+    def __str__(self):
+        return str(self.values)
 
-        self._parse_pesel()
+    def __add__(self, other):
+        if len(self.values) != len(other.values):
+            raise ValueError("Vectors must have the same length")
 
-    def _parse_pesel(self):
-        rok = int(self.pesel[:2])
-        miesiac = int(self.pesel[2:4])
-        dzien = int(self.pesel[4:6])
+        result = []
+        for i in range(len(self.values)):
+            result.append(self.values[i] + other.values[i])
 
-        if miesiac > 12:
-            rok += 2000
-            miesiac -= 20
+        return Vector(result)
+
+    def __sub__(self, other):
+        if len(self.values) != len(other.values):
+            raise ValueError("Vectors must have the same length")
+
+        result = []
+        for i in range(len(self.values)):
+            result.append(self.values[i] - other.values[i])
+
+        return Vector(result)
+
+    def __mul__(self, other):
+        if isinstance(other, Vector):
+            if len(self.values) != len(other.values):
+                raise ValueError("Vectors must have the same length")
+
+            result = 0
+            for i in range(len(self.values)):
+                result += self.values[i] * other.values[i]
+
+            return result
         else:
-            rok += 1900
+            result = []
+            for i in range(len(self.values)):
+                result.append(self.values[i] * other)
 
-        self.data_urodzenia = datetime.date(rok, miesiac, dzien)
+            return Vector(result)
 
-        cyfra_plec = int(self.pesel[-2])
-        if cyfra_plec % 2 == 0:
-            self.plec = 'Kobieta'
-        else:
-            self.plec = 'Mężczyzna'
+    def __rmul__(self, other):
+        result = []
+        for i in range(len(self.values)):
+            result.append(self.values[i] * other)
 
-    def oblicz_wiek(self, dzisiaj=None):
-        if dzisiaj is None:
-            dzisiaj = datetime.date.today()
+        return Vector(result)
 
-        wiek = dzisiaj.year - self.data_urodzenia.year - ((dzisiaj.month, dzisiaj.day) < (self.data_urodzenia.month, self.data_urodzenia.day))
+v1 = Vector([1, 2, 3])
+v2 = Vector([4, 5, 6])
 
-        return wiek
-
-    def wyswietl_informacje(self):
-        print(f"Imię: {self.imie}")
-        print(f"Nazwisko: {self.nazwisko}")
-        print(f"Pesel: {self.pesel}")
-        print(f"Data urodzenia: {self.data_urodzenia.strftime('%Y-%m-%d')}")
-        print(f"Płeć: {self.plec}")
-        print(f"Wiek: {self.oblicz_wiek()}")
+print(v1 + v2)      # [5, 7, 9]
+print(v1 - v2)      # [-3, -3, -3]
+print(v1 * v2)      # 32
+print(2 * v1)       # [2, 4, 6]
+print(v1 * 2)       # [2, 4, 6]
