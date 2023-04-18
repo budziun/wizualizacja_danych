@@ -1,3 +1,4 @@
+
 #cw01
 owoce = ["banan","ananas","mandarynka","banan","jabłko"] #lista
 
@@ -16,8 +17,6 @@ print(co4)
 
 #cw03
 #pkt1
-import math
-
 def fib(n):
     if n<=1:
         return n
