@@ -1,0 +1,132 @@
+#cw01
+owoce = ["banan","ananas","mandarynka","banan","jabłko"] #lista
+
+def bezpow(owoce):
+    unikalne = set(owoce) #ustawienie ze bez powtorzen
+    for a in unikalne:
+        print(a)
+
+bezpow(owoce)
+#cw02
+str1="a bcd if ghi  jk"
+czysty = ''.join(filter(str.isalnum,str1))
+odwrocone = czysty[::-1]
+co4 = odwrocone[3::4]
+print(co4)
+
+#cw03
+#pkt1
+import math
+
+def fib(n):
+    if n<=1:
+        return n
+    else:
+        return fib(n-1) + fib(n-2)
+
+n=10
+fib_n=fib(n)
+print(fib_n)
+
+#pkt2
+def fibonacci(n):
+    if n <= 1:
+        return n
+
+    fib = [0, 1]
+
+    for i in range(2, n + 1):
+        fib.append(fib[i - 1] + fib[i - 2])
+
+    return fib[n]
+
+print(fibonacci(10))
+
+#cw04
+def iloczyn(*num,n=2):
+    odp =1
+    for x in num:
+        odp = odp *x**n
+    print(odp)
+
+iloczyn(1,2,3,4,5)
+
+#cw05
+owoce2=['apple','banana','pomergranate','plum','orange','melon','cherry','watermelon']
+
+owoce3= [x for x in owoce2 if 'u' in x or 'o' in x]
+print(owoce3)
+leno = [len(i) for i in owoce3]
+print(leno)
+
+#cw06
+def newton(n,k):
+    gora=1
+    dol=1
+    for i in range(k):
+        gora *= n-i
+        dol *= i+1
+    return gora//dol
+
+print(newton(7,2))
+
+#cw07
+class Polynomial:
+    def __init__(self, coeffs):
+        self.coeffs = coeffs
+
+    def __add__(self, other):
+        new_coeffs = []
+        for i in range(max(len(self.coeffs), len(other.coeffs))):
+            if i < len(self.coeffs) and i < len(other.coeffs):
+                new_coeffs.append(self.coeffs[i] + other.coeffs[i])
+            elif i < len(self.coeffs):
+                new_coeffs.append(self.coeffs[i])
+            else:
+                new_coeffs.append(other.coeffs[i])
+        return Polynomial(new_coeffs)
+
+    def __sub__(self, other):
+        new_coeffs = []
+        for i in range(max(len(self.coeffs), len(other.coeffs))):
+            if i < len(self.coeffs) and i < len(other.coeffs):
+                new_coeffs.append(self.coeffs[i] - other.coeffs[i])
+            elif i < len(self.coeffs):
+                new_coeffs.append(self.coeffs[i])
+            else:
+                new_coeffs.append(-other.coeffs[i])
+        return Polynomial(new_coeffs)
+
+    def __str__(self):
+        terms = []
+        for i, coeff in enumerate(self.coeffs):
+            if coeff == 0:
+                continue
+            term = ''
+            if coeff > 0 and i > 0:
+                term += '+'
+            if coeff != 1 and coeff != -1 or i == 0:
+                term += str(coeff)
+            if i > 0:
+                term += 'x'
+            if i > 1:
+                term += '^' + str(i)
+            terms.append(term)
+        if not terms:
+            return '0'
+        return ' '.join(reversed(terms))
+
+    def degree(self):
+        return len(self.coeffs) - 1
+
+    def __getitem__(self, index):
+        return self.coeffs[index]
+
+
+p1 = Polynomial([1, -2, 1])
+p2 = Polynomial([2, 1])
+print(p1)  # wyświetli: 1x^2-2x+1
+print(p2)  # wyświetli: 2x+1
+p3 = p1 + p2
+print(p3)  # wyświetli: 1x^2-2x+3
+p4 = p1 - p2
