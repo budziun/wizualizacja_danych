@@ -57,3 +57,11 @@ F=np.array([[2,1],[2,8]])
 print(E/F)
 print(E//F)
 print(E%F)
+
+#program83.py
+panstwa=np.array(['China','Japan','Germany','USA','South Korea','India','Brazil','Mexico','Spain','Russia'])
+year1999=np.array([0.56,8.1,5.3,5.63,2.36,0.53,1.1,0.99,2.28,0.94])
+year2014=np.array([19.91,8.27,5.6,4.25,4.12,3.15,2.31,1.91,1.89,1.69])
+ma = np.array([True,False,True,False])
+print(panstwa[np.logical_and((year1999>5),(year2014>5))])
+print(panstwa[year2014>year1999])
