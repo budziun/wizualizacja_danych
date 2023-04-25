@@ -1,2 +1,31 @@
-https://garticphone.com/pl/?c=02f2e53c54
-https://skribbl.io/?jxCjVp7B
+import numpy as np
+
+# przykładowe dane
+data = np.array([
+    ['USA', 11.2, 12.1],
+    ['China', 1.8, 24.4],
+    ['Japan', 9.4, 9.6],
+    ['Germany', 4.6, 6.0],
+    ['India', 0.6, 3.2],
+    ['South Korea', 3.1, 4.6],
+    ['Mexico', 1.4, 3.5],
+    ['Brazil', 1.5, 3.3],
+    ['Spain', 2.2, 2.8],
+    ['Canada', 2.5, 2.4]
+])
+
+# obliczanie procentowego wzrostu produkcji w każdym państwie
+percent_increase = ((data[:, 2] - data[:, 1]) / data[:, 1]) * 100
+
+# wyświetlenie wyników wzrostu produkcji
+for i in range(len(data)):
+    print(f"Wzrost produkcji w {data[i][0]} wyniósł {percent_increase[i]:.2f}%")
+
+# wyświetlenie państw z najmniejszą i największą produkcją
+min_prod = np.argmin(data[:, 1:].astype(float).sum(axis=1))
+max_prod = np.argmax(data[:, 1:].astype(float).sum(axis=1))
+print(f"\nNajmniej samochodów wyprodukowało państwo {data[min_prod][0]}, a najwięcej państwo {data[max_prod][0]}.")
+
+# wybieranie państw, które wyprodukowały w 2014 mniej samochodów niż w 1999
+less_prod = data[data[:, 2].astype(float) < data[:, 1].astype(float), 0]
+print(f"\nPaństwa, które wyprodukowały w 2014 mniej samochodów niż w 1999: {', '.join(less_prod)}.")
