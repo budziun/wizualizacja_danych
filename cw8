@@ -1,0 +1,27 @@
+#program81.py
+import numpy as np
+my_array=np.arange(10,40,2)
+
+print("rozmiar tablicy: ",my_array.shape)
+
+#my_array_resize = my_array.resize(5,4)
+#print("Nowy rozmiar tablicy: ",my_array.resize)
+
+my_array3dodac = my_array +3
+print("Dodajemy 3 do kazdego elementu",my_array3dodac)
+my_array2razy = my_array*2
+print("Mnozymy przez 2 kazdy element talbicy",my_array2razy)
+
+my_array[my_array % 6 ==2] = 0
+print("podzielne przez 6 gdzie reszta 2 =0",my_array)
+
+def change(A,x):
+    B = np.copy(A)
+    B[B==0] =x
+    return B
+
+A = np.array([[1,0,3],[0,5,0],[7,0,9]])
+x =99
+B=change(A,x)
+print("OG tablica",A)
+print("Zmodygikowana tablica",B)
