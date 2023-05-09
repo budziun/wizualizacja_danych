@@ -1,0 +1,146 @@
+import pandas as pd
+import numpy as np
+
+# Cw 1
+# a)
+"""print("a)\n#1:")
+num = pd.Series([1, 2, 3, 4, 5])
+print(num)
+
+print("#2:")
+str = pd.Series(['one', 'two', 'three'])
+print(str)
+
+print("#3:")
+list = [10, 20, 30, 40]
+list_pd = pd.Series(list)
+print(list_pd)
+
+print("#4:")
+str_list = str.tolist()
+print(str_list)
+
+print("#5:")
+tab = np.array([11, 22, 33, 44])
+tab_pd = pd.Series(tab)
+print(tab_pd)
+
+print("#6:")
+str_array = np.array(str)
+print(str_array)
+
+print("#7:")
+s1 = pd.Series([1, 2, 3], index=['a', 'b', 'c'])
+s2 = pd.Series([4, 5, 6], index=['b', 'c', 'd'])
+
+s_add = s1 + s2
+s_sub = s1 - s2
+s_mul = s1 * s2
+s_div = s1 / s2
+print(s_add)
+print(s_sub)
+print(s_mul)
+print(s_div)
+
+print("#8:")
+arr = np.arange(-10, 10, 0.1)
+ser = pd.Series(arr)
+neg_ser = ser[ser < 0]
+print(neg_ser)"""
+
+# b)
+"""print("b)")
+my_list = [1, 32, -37, 91, 12, 11, -5]
+my_dict = {'a': [1, 3, 2], 'b': [2, 5, 7], 'c': [3, 4, 8], 'd': [4, 10, 12]}
+my_array = np.array([[1, 2, 5], [-2, 3, 3], [5, 2, 6]])
+my_series = pd.Series([1, 32, -37, 91, 12, 11, -5], index=['a', 'b', 'c', 'd', 'e', 'f', 'g'])
+
+my_list_df = pd.DataFrame(data=my_list, columns=['numbers'], index=[f'row{i}' for i in range(1, len(my_list) + 1)])
+print(my_list_df)
+
+my_dict_df = pd.DataFrame(my_dict, index=['row1', 'row2', 'row3'])
+print(my_dict_df)
+
+my_array_df = pd.DataFrame(my_array, columns=['col1', 'col2', 'col3'], index=['row1', 'row2', 'row3'])
+print(my_array_df)
+
+my_series_df = pd.DataFrame(my_series, columns=['numbers'])
+print(my_series_df)
+
+print()
+my_list_new = my_list_df['numbers'].tolist()
+print(my_list_new)
+
+my_dict_new = my_dict_df.to_dict()
+print(my_dict_new)
+
+my_array_new = my_array_df.values
+print(my_array_new)
+
+my_series_new = my_series.to_list()
+print(my_series_new)
+
+# c)
+print("c)")
+data = {'a': [1, -3, 2], 'b': [2, 8, -5], 'c': [4, 0.5, 7], 'd': [5, 10, 3]}
+df = pd.DataFrame(data, index=['l1', 'l2', 'l3'])
+print(df)"""
+
+# Cw 2
+df1 = pd.DataFrame([[2942, 9840, 2794, 8891, 8111, 2933, 8301, 9125], ['Sylwia', 'Katarzyna', 'Teresa', 'Tomasz', 'Cezary', 'Zenon', 'Filip', 'Adrian'], [13, 31, 34, 14, 13, 28, 20, 15]]).T
+df1.columns = ['ID', 'Name', 'Age']
+weight = [65, 80, 64, 69, 74, 61, 66, 61]
+height = [179, 179, 151, 177, 170, 157, 151, 153]
+glasses = [False, True, False, True, False, True, False, True]
+df2 = pd.DataFrame([[2312, 2336, 2942, 9840, 2794, 8891, 8111, 2933], ['Anna', 'Zofia', 'Sylwia', 'Katarzyna', 'Teresa', 'Tomasz', 'Cezary', 'Zenon'], weight, height, glasses]).T
+df2.columns = ['ID', 'Name', 'W', 'H', 'GI']
+
+print("#1")
+df0 = pd.merge(df1, df2, how='inner')
+print(df0)
+# df00 = pd.merge(df1, df2, how='outer')
+# print(df00)
+
+print("#2")
+names = df0.columns.values.tolist()
+name_index = names.index('Name')
+names_alpha = np.sort(df0[names[name_index]])
+print(names_alpha)
+
+print("#3")
+df0_columns = df0.columns.values.tolist()
+glasses_name_index = df0_columns.index('GI')
+glasses_bool = df0[df0_columns[glasses_name_index]]
+glasses_names = df0[df0_columns[name_index]]
+with_glasses = np.array(glasses_names.tolist())[glasses_bool.tolist()]
+print(with_glasses)
+
+print("#4")
+df0_columns = df0.columns.values.tolist()
+age_index = df0_columns.index('Age')
+name_index = names.index('Name')
+ages = np.array(df0[df0_columns[age_index]].tolist())
+names = np.array(df0[df0_columns[name_index]].tolist())
+ages_20_30 = np.logical_and(ages >= 20, ages <= 30)
+names_age_20_30 = names[ages_20_30]
+print(names_age_20_30)
+
+print("#5")
+df0_columns = df0.columns.values.tolist()
+id_index = df0_columns.index('ID')
+ids = np.array(df0[df0_columns[id_index]].tolist())
+
+weight_index = df0_columns.index('W')
+weight_df0 = np.array(df0[df0_columns[weight_index]].tolist())
+
+height_index = df0_columns.index('H')
+height_df0 = np.array(df0[df0_columns[height_index]].tolist())
+
+bmi = np.array((weight_df0/(height_df0**2)*10000))
+
+bmi_df = pd.DataFrame(data=bmi, index=ids, columns=['BMI'])
+df0 = pd.merge(df0, bmi_df, left_on='ID', right_index=True, how='inner')
+print(df0)
+
+print("#6")
+print(np.mean(ages))
