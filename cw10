@@ -1,0 +1,52 @@
+import numpy as np
+import pandas as pd
+
+data = np.genfromtxt('jajka2023.csv', delimiter=";", dtype='|U16', encoding='UTF-8')
+
+listaCen = [[float(el.replace(',', '.')) for el in row[1:] if el != ''] for row in data[1:]]
+ceny = []
+for row in listaCen:
+    for el in row:
+        ceny.append(el)
+sredniaCena = sum(ceny) / len(ceny)
+print(f'Średnia cena jaj: {round(sredniaCena, 2)}')
+
+miasta = data[0][1:]
+sklepy = [row[0] for row in data[1:]]
+ceny = [[float(el.replace(',', '.')) if el != '' else el for el in row[1:]] for row in data[1:]]
+
+minCena = ceny[0][0]
+maxCena = ceny[0][0]
+
+indexMinMiasta = miasta[0]
+indexMinSklepu = sklepy[0]
+indexMaxMiasta = miasta[0]
+indexMaxSklepu = sklepy[0]
+
+for indexSklepu, row in enumerate(ceny):
+    for indexMiasta, cena in enumerate(row):
+        if cena == '':
+            continue
+
+        if cena < minCena:
+            minCena = cena
+            indexMinMiasta = indexMiasta
+            indexMinSklepu = indexSklepu
+        if cena > maxCena:
+            maxCena = cena
+            indexMaxMiasta = indexMiasta
+            indexMaxSklepu = indexSklepu
+
+print(f'Najnizsza cena jaj to {minCena} w mieście {miasta[indexMinMiasta]} w sklepie {sklepy[indexMinSklepu]}')
+print(f'Najwieksza cena jaj to {maxCena} w mieście {miasta[indexMaxMiasta]} w sklepie {sklepy[indexMaxSklepu]}')
+
+exit()
+
+miasta = data[0][1:]
+ceny = [[cena.replace(',', '.') if cena != '' else 0 for cena in row] for row in data[1:][1:]]
+df = pd.DataFrame(ceny)
+
+convDict = {miasto: 'float' for miasto in miasta}
+df.columns = data[0]
+df = df.astype(convDict)
+print(df)
