@@ -1,0 +1,35 @@
+import pandas as pd
+
+# Wczytanie pliku CSV
+data = pd.read_csv('penguins.csv')
+
+# Średnia waga dla każdej płci
+srednia_waga_plec = data.groupby('sex')['body_mass_g'].mean()
+
+# Średnia waga z podziałem na płeć i gatunek
+srednia_waga_plec_gatunek = data.groupby(['sex', 'species'])['body_mass_g'].mean()
+
+# Pingwiny z największą i najmniejszą wagą
+najwieksza_waga = data[data['body_mass_g'] == data['body_mass_g'].max()]
+najmniejsza_waga = data[data['body_mass_g'] == data['body_mass_g'].min()]
+
+# Ilość pingwinów każdego gatunku na każdej wyspie
+liczba_pingwinow_gatunek_wyspa = data.groupby(['species', 'island']).size()
+
+# Ilość pingwinów gatunku 'Adelie' na każdej wyspie
+liczba_pingwinow_adelie_wyspa = data[data['species'] == 'Adelie'].groupby('island').size()
+
+print("Średnia waga dla każdej płci:")
+print(srednia_waga_plec)
+print("\nŚrednia waga z podziałem na płeć i gatunek:")
+print(srednia_waga_plec_gatunek)
+print("\nPingwiny z największą wagą:")
+print(najwieksza_waga)
+print("\nPingwiny z najmniejszą wagą:")
+print(najmniejsza_waga)
+print("\nIlość pingwinów każdego gatunku na każdej wyspie:")
+print(liczba_pingwinow_gatunek_wyspa)
+print("\nIlość pingwinów gatunku 'Adelie' na każdej wyspie:")
+print(liczba_pingwinow_adelie_wyspa)
+
+
