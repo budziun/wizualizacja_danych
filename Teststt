@@ -1,35 +1,34 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 # Wczytanie pliku CSV
 data = pd.read_csv('penguins.csv')
 
-# Średnia waga dla każdej płci
-srednia_waga_plec = data.groupby('sex')['body_mass_g'].mean()
+# Wykres słupkowy ilości pingwinów w zależności od wyspy
+liczba_pingwinow_wyspa = data['island'].value_counts()
+liczba_pingwinow_wyspa.plot(kind='bar')
 
-# Średnia waga z podziałem na płeć i gatunek
-srednia_waga_plec_gatunek = data.groupby(['sex', 'species'])['body_mass_g'].mean()
+# Ustawienie etykiet osi
+plt.xlabel('Wyspa')
+plt.ylabel('Ilość pingwinów')
+plt.title('Ilość pingwinów na każdej wyspie')
 
-# Pingwiny z największą i najmniejszą wagą
-najwieksza_waga = data[data['body_mass_g'] == data['body_mass_g'].max()]
-najmniejsza_waga = data[data['body_mass_g'] == data['body_mass_g'].min()]
+# Wyświetlenie wykresu słupkowego
+plt.show()
 
-# Ilość pingwinów każdego gatunku na każdej wyspie
-liczba_pingwinow_gatunek_wyspa = data.groupby(['species', 'island']).size()
+# Wykres punktowy zależności szerokości dzioba od długości
+waga = data['body_mass_g']**3 / 2000
+kolor = np.where(data['sex'] == 'Male', 'blue', 'red')
+ksztalt = np.where(data['species'] == 'Adelie', 'o', np.where(data['species'] == 'Chinstrap', '^', 's'))
 
-# Ilość pingwinów gatunku 'Adelie' na każdej wyspie
-liczba_pingwinow_adelie_wyspa = data[data['species'] == 'Adelie'].groupby('island').size()
+plt.scatter(data['bill_length_mm'], data['bill_depth_mm'], c=kolor, s=waga, marker=ksztalt, alpha=0.6)
 
-print("Średnia waga dla każdej płci:")
-print(srednia_waga_plec)
-print("\nŚrednia waga z podziałem na płeć i gatunek:")
-print(srednia_waga_plec_gatunek)
-print("\nPingwiny z największą wagą:")
-print(najwieksza_waga)
-print("\nPingwiny z najmniejszą wagą:")
-print(najmniejsza_waga)
-print("\nIlość pingwinów każdego gatunku na każdej wyspie:")
-print(liczba_pingwinow_gatunek_wyspa)
-print("\nIlość pingwinów gatunku 'Adelie' na każdej wyspie:")
-print(liczba_pingwinow_adelie_wyspa)
+# Ustawienie etykiet osi
+plt.xlabel('Długość dzioba (mm)')
+plt.ylabel('Szerokość dzioba (mm)')
+plt.title('Zależność szerokości dzioba od długości')
 
+# Wyświetlenie wykresu punktowego
+plt.show()
 
