@@ -1,66 +1,99 @@
-import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+import seaborn as sns
 
-# Wczytanie pliku CSV
+# Cw 1
+
 data = pd.read_csv('penguins.csv')
+print(data)
+print(data.groupby(['species', 'sex'])['body_mass_g'].mean())
+print(data[data['body_mass_g'] == data['body_mass_g'].max()])
+print(data[data['body_mass_g'] == data['body_mass_g'].min()])
+print(len(data[data['island'] == 'Torgersen']))
 
-# Średnia waga dla każdej płci
-srednia_waga_plec = data.groupby('sex')['body_mass_g'].mean()
+islands = pd.DataFrame(data.groupby(by='island').size()).index.tolist()
+num_penguins = np.array(data.groupby(by='island').size()).tolist()
+# plt.bar(islands, num_penguins)
+# plt.show()
 
-# Średnia waga z podziałem na płeć i gatunek
-srednia_waga_plec_gatunek = data.groupby(['sex', 'species'])['body_mass_g'].mean()
+bill_depth_mm = data['bill_depth_mm']
+bill_length_mm = data['bill_length_mm']
+colors = np.where(data['sex'] == 'MALE', 'blue', 'red').tolist()
+weight = np.where(data['body_mass_g'].isna(), 0, (data['body_mass_g'] ** 2)/300000).astype(float)
+species = data['species'].copy()
+sym = ['^', 's', 'o']
+species_unique = np.unique(species)
+num = 0
+for i in species_unique:
+    species[species == i] = sym[num]
+    num += 1
 
-# Pingwiny z największą i najmniejszą wagą
-najwieksza_waga = data[data['body_mass_g'] == data['body_mass_g'].max()]
-najmniejsza_waga = data[data['body_mass_g'] == data['body_mass_g'].min()]
-
-# Ilość pingwinów każdego gatunku na każdej wyspie
-liczba_pingwinow_gatunek_wyspa = data.groupby(['species', 'island']).size()
-
-# Ilość pingwinów gatunku 'Adelie' na każdej wyspie
-liczba_pingwinow_adelie_wyspa = data[data['species'] == 'Adelie'].groupby('island').size()
-
-print("Średnia waga dla każdej płci:")
-print(srednia_waga_plec)
-print("\nŚrednia waga z podziałem na płeć i gatunek:")
-print(srednia_waga_plec_gatunek)
-print("\nPingwiny z największą wagą:")
-print(najwieksza_waga)
-print("\nPingwiny z najmniejszą wagą:")
-print(najmniejsza_waga)
-print("\nIlość pingwinów każdego gatunku na każdej wyspie:")
-print(liczba_pingwinow_gatunek_wyspa)
-print("\nIlość pingwinów gatunku 'Adelie' na każdej wyspie:")
-print(liczba_pingwinow_adelie_wyspa)
-
-
-
-# Wykres słupkowy ilości pingwinów w zależności od wyspy
-liczba_pingwinow_wyspa = data['island'].value_counts()
-liczba_pingwinow_wyspa.plot(kind='bar')
-
-# Ustawienie etykiet osi
-plt.xlabel('Wyspa')
-plt.ylabel('Ilość pingwinów')
-plt.title('Ilość pingwinów na każdej wyspie')
-
-# Wyświetlenie wykresu słupkowego
+fig, ax = plt.subplots()
+z = zip(data['bill_length_mm'], data['bill_depth_mm'], colors, weight, species)
+data.plot.scatter(x='bill_length_mm', y='bill_depth_mm', c=colors, s=weight)
+for xx, yy, co, w, m in z:
+    ax.scatter(xx, yy, c=co, s=w, marker=m)
 plt.show()
 
-# Wykres punktowy zależności szerokości dzioba od długości
-waga = data['body_mass_g']**3 / 2000
-kolor = np.where(data['sex'] == 'Male', 'blue', 'red')
-ksztalt = np.where(data['species'] == 'Adelie', 'o', np.where(data['species'] == 'Chinstrap', '^', 's'))
-
-plt.scatter(data['bill_length_mm'], data['bill_depth_mm'], c=kolor, s=waga, marker=ksztalt, alpha=0.6)
-
-# Ustawienie etykiet osi
-plt.xlabel('Długość dzioba (mm)')
-plt.ylabel('Szerokość dzioba (mm)')
-plt.title('Zależność szerokości dzioba od długości')
-
-# Wyświetlenie wykresu punktowego
+# Cw 2
+# hue - kolory
+# kind - typ, np. line/box
+# size - rozmiar (skala)
+# style - ikona na wykresie
+penguins = sns.load_dataset('penguins')
+print(penguins)
+sns.relplot(penguins, x='bill_length_mm', y='bill_depth_mm', hue='sex', size='body_mass_g', style='species')
 plt.show()
 
+# Cw 3
+"""iris = sns.load_dataset('iris')
+sns.scatterplot(data=iris, x='sepal_length', y='sepal_width', hue='species', size='petal_length', style='species')
+plt.title('Setal Length & Setal Width')
+plt.show()
 
+sns.relplot(data=iris, x='petal_length', y='petal_width', hue='species', size='petal_length', style='species')
+plt.title('Petal Length & petal Width')
+plt.show()
+
+sns.catplot(data=iris, x='species', y='sepal_length', kind='box')
+plt.title('Sepal Length')
+plt.show()
+
+sns.catplot(data=iris, x='species', y='sepal_width', kind='box')
+plt.title('Sepal Width')
+plt.show()
+
+sns.catplot(data=iris, x='species', y='petal_width', kind='box')
+plt.title('Petal Width')
+plt.show()
+
+sns.pairplot(iris, hue='species')
+plt.show()"""
+
+# wykresy na jednym ekranie
+fig, axes = plt.subplots(2, 3, figsize=(10, 5))
+iris = sns.load_dataset('iris')
+
+sns.scatterplot(data=iris, x='sepal_length', y='sepal_width', hue='species', size='petal_length', style='species',
+                ax=axes[0, 0])
+axes[0, 0].set_title('Setal Length & Setal Width')
+
+sns.scatterplot(data=iris, x='petal_length', y='petal_width', hue='species', size='petal_length', style='species',
+                ax=axes[0, 1])
+axes[0, 1].set_title('Petal Length & petal Width')
+
+sns.boxplot(data=iris, x='species', y='sepal_length', ax=axes[0, 2])
+axes[0, 2].set_title('Sepal Length')
+
+sns.boxplot(data=iris, x='species', y='sepal_width', ax=axes[1, 0])
+axes[1, 0].set_title('Sepal Width')
+
+sns.boxplot(data=iris, x='species', y='sepal_width', ax=axes[1, 1])
+axes[1, 1].set_title('Sepal Width')
+
+sns.boxplot(data=iris, x='species', y='petal_width', ax=axes[1, 2])
+axes[1, 2].set_title('Petal Width')
+
+plt.tight_layout()
+plt.show()
